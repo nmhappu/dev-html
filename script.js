@@ -1,9 +1,5 @@
-/**
- * Clean Profile - JavaScript Interactions
- * Theme Switcher, Email Copy Toast, and Smooth Navigation
- */
-
 document.addEventListener('DOMContentLoaded', () => {
+  initUrlHandler();
   initTheme();
   initCopyEmail();
   initScrollSpy();
@@ -11,28 +7,22 @@ document.addEventListener('DOMContentLoaded', () => {
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 });
 
-/* ==========================================================================
-   Theme Management (Light / Dark Mode)
-   ========================================================================== */
 function initTheme() {
   const themeToggleBtn = document.getElementById('theme-toggle');
   if (!themeToggleBtn) return;
 
-  // Determine initial theme: saved preference -> system preference -> default 'dark'
   const savedTheme = localStorage.getItem('theme');
   const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   
   let currentTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
   applyTheme(currentTheme);
 
-  // Toggle click listener
   themeToggleBtn.addEventListener('click', () => {
     currentTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     applyTheme(currentTheme);
     localStorage.setItem('theme', currentTheme);
   });
 
-  // Listen for OS system theme changes
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
     if (!localStorage.getItem('theme')) {
       applyTheme(e.matches ? 'dark' : 'light');
@@ -56,9 +46,6 @@ function applyTheme(theme) {
   }
 }
 
-/* ==========================================================================
-   Copy Text / Phone / Email to Clipboard with Floating Toast
-   ========================================================================== */
 function initCopyEmail() {
   const copyButtons = document.querySelectorAll('.js-copy-text, .js-copy-email, .js-copy-phone');
   const toast = document.getElementById('toast');
@@ -74,7 +61,6 @@ function initCopyEmail() {
         if (navigator.clipboard && window.isSecureContext) {
           await navigator.clipboard.writeText(textToCopy);
         } else {
-          // Fallback for older browsers or insecure origins
           const textArea = document.createElement('textarea');
           textArea.value = textToCopy;
           textArea.style.position = 'fixed';
@@ -107,9 +93,6 @@ function initCopyEmail() {
   }
 }
 
-/* ==========================================================================
-   Active Navigation Link Highlighting on Scroll
-   ========================================================================== */
 function initScrollSpy() {
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.nav-link');
@@ -138,4 +121,44 @@ function initScrollSpy() {
   }, observerOptions);
 
   sections.forEach((section) => observer.observe(section));
+}
+
+function initUrlHandler() {
+  const isHttp = window.location.protocol === 'http:' || window.location.protocol === 'https:';
+
+  if (isHttp) {
+    const { pathname, search, hash } = window.location;
+    if (pathname.endsWith('.html')) {
+      let cleanPath = pathname;
+      if (cleanPath.endsWith('/index.html') || cleanPath === 'index.html') {
+        cleanPath = cleanPath.slice(0, -10) || '/';
+      } else {
+        cleanPath = cleanPath.replace(/\.html$/, '');
+      }
+      window.history.replaceState(null, '', cleanPath + search + hash);
+    }
+  }
+
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a');
+    if (!link) return;
+
+    const href = link.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('http:') || href.startsWith('https:')) {
+      return;
+    }
+
+    if (window.location.protocol === 'file:') {
+      if (href === '/' || href === '/index' || href === 'index') {
+        e.preventDefault();
+        window.location.href = 'index.html';
+      } else if (href.startsWith('/#') || href.startsWith('./#')) {
+        e.preventDefault();
+        window.location.href = 'index.html' + href.slice(href.indexOf('#'));
+      } else if (href === 'privacy' || href === '/privacy') {
+        e.preventDefault();
+        window.location.href = 'privacy.html';
+      }
+    }
+  });
 }
