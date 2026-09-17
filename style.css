@@ -13,10 +13,10 @@
   --text-secondary: #4b5563;
   --text-muted: #6b7280;
   
-  --accent: #2563eb;
-  --accent-rgb: 37, 99, 235;
-  --accent-hover: #1d4ed8;
-  --accent-light: rgba(37, 99, 235, 0.08);
+  --accent: #0284c7;
+  --accent-rgb: 2, 132, 199;
+  --accent-hover: #0369a1;
+  --accent-light: rgba(2, 132, 199, 0.08);
 
   --badge-bg: #f3f4f6;
   --badge-text: #374151;
@@ -40,24 +40,24 @@
 }
 
 [data-theme="dark"] {
-  --bg-color: #0d0f14;
-  --surface-color: #141820;
-  --surface-hover: #1b212c;
-  --border-color: #232a37;
-  --border-focus: #4b5563;
+  --bg-color: #0c0e12;
+  --surface-color: #131720;
+  --surface-hover: #19202d;
+  --border-color: #212938;
+  --border-focus: #38bdf8;
 
-  --text-primary: #f9fafb;
-  --text-secondary: #d1d5db;
-  --text-muted: #9ca3af;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
 
-  --accent: #60a5fa;
-  --accent-rgb: 96, 165, 250;
-  --accent-hover: #93c5fd;
-  --accent-light: rgba(96, 165, 250, 0.12);
+  --accent: #38bdf8;
+  --accent-rgb: 56, 189, 248;
+  --accent-hover: #7dd3fc;
+  --accent-light: rgba(56, 189, 248, 0.12);
 
-  --badge-bg: #1c2230;
+  --badge-bg: #192233;
   --badge-text: #e2e8f0;
-  --badge-border: #2a3344;
+  --badge-border: #24324a;
 
   --success-dot: #34d399;
   --success-bg: rgba(52, 211, 153, 0.12);
@@ -399,9 +399,88 @@ section {
   transform: translateY(-1px);
 }
 
+.btn-whatsapp {
+  background-color: #15803d;
+  color: #ffffff;
+  border: 1px solid #16a34a;
+}
+
+.btn-whatsapp:hover {
+  background-color: #166534;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.btn-instagram {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  color: #ffffff;
+  border: none;
+}
+
+.btn-instagram:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+  color: #ffffff;
+}
+
 .btn svg {
   width: 16px;
   height: 16px;
+}
+
+/* ==========================================================================
+   Services Grid
+   ========================================================================== */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.service-card {
+  padding: 1.5rem;
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.service-card:hover {
+  border-color: var(--border-focus);
+  transform: translateY(-2px);
+  box-shadow: var(--card-shadow-hover);
+}
+
+.service-icon-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  background-color: var(--accent-light);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.25rem;
+}
+
+.service-icon-wrap svg {
+  width: 22px;
+  height: 22px;
+}
+
+.service-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.service-desc {
+  font-size: 0.925rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
 }
 
 /* ==========================================================================

@@ -57,25 +57,26 @@ function applyTheme(theme) {
 }
 
 /* ==========================================================================
-   Copy Email to Clipboard with Floating Toast
+   Copy Text / Phone / Email to Clipboard with Floating Toast
    ========================================================================== */
 function initCopyEmail() {
-  const copyButtons = document.querySelectorAll('.js-copy-email');
+  const copyButtons = document.querySelectorAll('.js-copy-text, .js-copy-email, .js-copy-phone');
   const toast = document.getElementById('toast');
   let toastTimeout;
 
   copyButtons.forEach((btn) => {
     btn.addEventListener('click', async (e) => {
       e.preventDefault();
-      const email = btn.getAttribute('data-email') || 'hello@appu.dev';
+      const textToCopy = btn.getAttribute('data-phone') || btn.getAttribute('data-email') || btn.getAttribute('data-copy') || '+91 79075 51379';
+      const label = btn.getAttribute('data-phone') ? 'Phone number' : (btn.getAttribute('data-email') ? 'Email' : 'Text');
 
       try {
         if (navigator.clipboard && window.isSecureContext) {
-          await navigator.clipboard.writeText(email);
+          await navigator.clipboard.writeText(textToCopy);
         } else {
           // Fallback for older browsers or insecure origins
           const textArea = document.createElement('textarea');
-          textArea.value = email;
+          textArea.value = textToCopy;
           textArea.style.position = 'fixed';
           textArea.style.left = '-999999px';
           textArea.style.top = '-999999px';
@@ -86,11 +87,10 @@ function initCopyEmail() {
           textArea.remove();
         }
 
-        showToast('Email address copied to clipboard!');
+        showToast(`${label} (${textToCopy}) copied to clipboard!`);
       } catch (err) {
-        console.error('Failed to copy email:', err);
-        showToast('Could not copy email, opening mail client instead...');
-        window.location.href = `mailto:${email}`;
+        console.error('Failed to copy text:', err);
+        showToast(`Copied: ${textToCopy}`);
       }
     });
   });
