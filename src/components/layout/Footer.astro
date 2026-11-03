@@ -1,6 +1,6 @@
 ---
-import { menuLinks, siteConfig } from "@/site.config";
 import MountainDots from "@/components/MountainDots.astro";
+import { menuLinks, siteConfig } from "@/site.config";
 ---
 
 <footer class="mt-auto w-full pt-20">
@@ -8,10 +8,7 @@ import MountainDots from "@/components/MountainDots.astro";
 		class="text-muted flex w-full flex-col items-center justify-center gap-y-2 text-center align-top font-semibold sm:flex-row sm:justify-between sm:text-xs"
 	>
 		<div class="me-0 sm:me-4">
-			<span
-				class="inline-block -rotate-2 text-3xl font-normal text-[#5c5c5c]"
-				style="font-family: 'Sedgwick Ave Display', cursive;"
-			>
+			<span class="font-signature inline-block -rotate-2 text-3xl font-normal">
 				{siteConfig.author}
 			</span>
 		</div>

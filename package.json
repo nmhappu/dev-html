@@ -1,8 +1,8 @@
 {
-	"name": "astro-cactus",
+	"name": "appu-dev",
 	"type": "module",
 	"version": "8.3.0",
-	"private": false,
+	"private": true,
 	"scripts": {
 		"postinstall": "npm rebuild sharp --force",
 		"dev": "astro dev",

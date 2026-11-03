@@ -1,32 +1,10 @@
 import type { APIContext, InferGetStaticPropsType } from "astro";
-import satori, { type SatoriOptions } from "satori";
+import satori from "satori";
 import sharp from "sharp";
-import RobotoMonoBold from "@/assets/roboto-mono-700.ttf";
-import RobotoMono from "@/assets/roboto-mono-regular.ttf";
 import { getAllPosts } from "@/data/post";
 import { getFormattedDate } from "@/utils/date";
 import { readCache, writeToCache } from "./_cacheUtil";
-import { ogMarkup } from "./_ogMarkup";
-
-const ogOptions: SatoriOptions = {
-	// debug: true,
-	fonts: [
-		{
-			data: Buffer.from(RobotoMono),
-			name: "Roboto Mono",
-			style: "normal",
-			weight: 400,
-		},
-		{
-			data: Buffer.from(RobotoMonoBold),
-			name: "Roboto Mono",
-			style: "normal",
-			weight: 700,
-		},
-	],
-	height: 630,
-	width: 1200,
-};
+import { ogMarkup, ogOptions } from "./_ogMarkup";
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 

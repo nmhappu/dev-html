@@ -3,6 +3,7 @@ import { type CollectionEntry, getCollection } from "astro:content";
 import Note from "@/components/note/Note.astro";
 import SocialList from "@/components/SocialList.astro";
 import PageLayout from "@/layouts/Base.astro";
+import { siteConfig } from "@/site.config";
 import { collectionDateSort } from "@/utils/date";
 
 // Notes, set to a max of 5
@@ -13,7 +14,7 @@ const latestNotes = allNotes
 	.slice(0, MAX_NOTES) as CollectionEntry<"note">[];
 ---
 
-<PageLayout meta={{ title: "About" }}>
+<PageLayout meta={{ title: siteConfig.author }}>
 	<section class="prose prose-base prose-cactus max-w-none">
 		<h1 class="title mb-8">Hey there!</h1>
 		<p>
@@ -21,7 +22,7 @@ const latestNotes = allNotes
 			time building for the web and developing my hardware skills.
 		</p>
 		<p>
-			I find computers fascinating, That being said I prefer the virtual world to the physical one.
+			I find computers fascinating. That being said, I prefer the virtual world to the physical one.
 		</p>
 		<p>Most of my projects revolve around VR, web development, and self-hosting.</p>
 		<p>I spend a good chunk of my free time enjoying games.</p>

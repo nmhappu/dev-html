@@ -23,6 +23,13 @@ export default {
 							border: "1px dotted #666",
 							borderRadius: "2px",
 						},
+						// The dotted border already marks inline code, so drop the typography plugin's backticks
+						"code::before": {
+							content: "none",
+						},
+						"code::after": {
+							content: "none",
+						},
 						kbd: {
 							"&:where([data-theme='dark'], [data-theme='dark'] *)": {
 								background: "var(--color-global-text)",

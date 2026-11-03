@@ -3,7 +3,7 @@ import { satteri, satteriHeadingIdsPlugin } from "@astrojs/markdown-satteri";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@tailwindcss/vite";
-import { defineConfig, envField } from "astro/config";
+import { defineConfig, envField, fontProviders } from "astro/config";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 import robotsTxt from "astro-robots-txt";
@@ -19,16 +19,45 @@ import {
 } from "./src/plugins/satteri";
 import { expressiveCodeOptions, siteConfig } from "./src/site.config";
 
+// The posts & tags listings are empty until the first post is written, so keep them out of the sitemap until then
+const hasPosts = fs
+	.readdirSync("./content/posts", { recursive: true })
+	.some((file) => /\.mdx?$/.test(String(file)));
+
 // https://astro.build/config
 export default defineConfig({
 	site: siteConfig.url,
+	// Downloaded at build & served from the site itself, used in src/components/BaseHead.astro
+	fonts: [
+		{
+			provider: fontProviders.google(),
+			name: "Google Sans",
+			cssVariable: "--font-google-sans",
+			weights: [400, 500, 700],
+			fallbacks: ["system-ui", "sans-serif"],
+		},
+		{
+			// Footer signature
+			provider: fontProviders.google(),
+			name: "Sedgwick Ave Display",
+			cssVariable: "--font-sedgwick",
+			fallbacks: ["cursive"],
+		},
+	],
 	image: {
 		domains: ["webmention.io"],
 	},
 	integrations: [
 		expressiveCode(expressiveCodeOptions),
 		icon(),
-		sitemap(),
+		sitemap({
+			filter: (page) => {
+				const { pathname } = new URL(page);
+				// src/pages/about.astro only redirects to the homepage
+				if (pathname === "/about/") return false;
+				return hasPosts || !/^\/(posts|tags)\//.test(pathname);
+			},
+		}),
 		mdx(),
 		robotsTxt(),
 		webmanifest({
