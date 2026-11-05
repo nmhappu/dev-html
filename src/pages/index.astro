@@ -12,11 +12,39 @@ const allNotes = await getCollection("note");
 const latestNotes = allNotes
 	.sort(collectionDateSort)
 	.slice(0, MAX_NOTES) as CollectionEntry<"note">[];
+
+const projects: { name: string; description: string; link: string; stack: string }[] = [
+	{
+		name: "LaluZ Garage",
+		description:
+			"A workshop management app. Job cards track vehicle maintenance, and a built-in inventory keeps count of parts.",
+		link: "https://github.com/nmhappu/laluzgarage-releases",
+		stack: "React, Jetpack Compose, Firebase",
+	},
+	{
+		name: "appu-dlp",
+		description:
+			"A web interface for downloading files and media. It switches between yt-dlp and curl, lists the formats available for a link, and deploys with Docker Compose.",
+		link: "https://github.com/nmhappu/appu-dlp",
+		stack: "React, Vite, Tailwind CSS, Express",
+	},
+];
+
+const tools = [
+	"React",
+	"Astro",
+	"Express",
+	"Jetpack Compose",
+	"Firebase",
+	"Docker Compose",
+	"GitHub Actions",
+	"Arduino",
+];
 ---
 
 <PageLayout meta={{ title: siteConfig.author }}>
 	<section class="prose prose-base prose-cactus max-w-none">
-		<h1 class="title mb-8">Hey there!</h1>
+		<h1 class="title font-greeting mb-6 text-5xl font-bold">Hey there!</h1>
 		<p>
 			I'm Prince. I work with Traction Rolling Stock (TRS) at Indian Railways, and spend my spare
 			time building for the web and developing my hardware skills.
@@ -38,6 +66,32 @@ const latestNotes = allNotes
 		<div class="not-prose mt-4">
 			<SocialList />
 		</div>
+	</section>
+
+	<section class="mt-16">
+		<h2 class="title text-accent mb-6 text-xl">Projects</h2>
+		<ul class="grid gap-4 sm:grid-cols-2" role="list">
+			{projects.map(({ name, description, link, stack }) => (
+				<li class="bg-global-text/5 flex flex-col gap-y-2 rounded-md px-4 py-3">
+					<h3 class="title text-base">
+						<a class="cactus-link" href={link} rel="noreferrer" target="_blank">
+							{name}
+						</a>
+					</h3>
+					<p class="flex-1 text-base">{description}</p>
+					<p class="text-muted text-xs">{stack}</p>
+				</li>
+			))}
+		</ul>
+	</section>
+
+	<section class="mt-16">
+		<h2 class="title text-accent mb-6 text-xl">Tools I've built with</h2>
+		<ul class="flex flex-wrap gap-2" role="list">
+			{tools.map((tool) => (
+				<li class="rounded-xs border border-dotted border-[#666] px-2 py-1">{tool}</li>
+			))}
+		</ul>
 	</section>
 
 	{latestNotes.length > 0 && (

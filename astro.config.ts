@@ -43,6 +43,14 @@ export default defineConfig({
 			cssVariable: "--font-sedgwick",
 			fallbacks: ["cursive"],
 		},
+		{
+			// Homepage greeting
+			provider: fontProviders.google(),
+			name: "Caveat",
+			cssVariable: "--font-caveat",
+			weights: [700],
+			fallbacks: ["cursive"],
+		},
 	],
 	image: {
 		domains: ["webmention.io"],

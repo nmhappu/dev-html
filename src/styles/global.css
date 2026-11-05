@@ -58,9 +58,10 @@
 	--color-accent: oklch(55.27% 0.195 19.06);
 	--color-accent-2: oklch(18.15% 0 0);
 	--color-quote: oklch(55.27% 0.195 19.06);
-	/* --font-google-sans & --font-sedgwick are set by the <Font /> components in src/components/BaseHead.astro */
+	/* --font-google-sans, --font-sedgwick & --font-caveat are set by the <Font /> components in src/components/BaseHead.astro */
 	--font-sans: var(--font-google-sans);
 	--font-signature: var(--font-sedgwick);
+	--font-greeting: var(--font-caveat);
 }
 
 @layer base {
